@@ -15,6 +15,7 @@ List<PromptConfig> promptsConfigs = [
   PromptConfig('#player is now a Parrot, repeate every prompt, failure to do so results in a shot', 3, 'Bye Bye birdy, #player does not have to repeat anymore' ),
   PromptConfig('#player give a shot for each player of the opposite gender, you\'re non binary? Double it' ),
   PromptConfig('VOTE: would you rather be a pancake or a waffle? Losers drink 3 times'),
+  PromptConfig('VOTE: "yes yes yes yes yes" or "Oh Fuck!"? Winners drink 2 times'),
 
 
   PromptConfig("VOTE: If there was a fight where there are 4 people against one, would you get involved or call the police? Losers must drink 3 sips"),
