@@ -112,8 +112,8 @@ List<PromptConfig> stolen = [
 
 class PromptMap {
   static Map<String, List<PromptConfig>> map = {
-    'original': originals,
-    'stolen': stolen
+    'stolen': stolen,
+    'original': originals
   };
 
   static List<String> options = PromptMap.map.keys.toList();

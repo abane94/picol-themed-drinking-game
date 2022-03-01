@@ -5,6 +5,8 @@ import 'package:picol_drinking_game/types/game-parameters.dart';
 
 import 'game.dart';
 
+const MIN_PLAYERS = 3;
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
@@ -98,8 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListView(children: _getPlayers(), shrinkWrap: true),
             ElevatedButton (
-              onPressed: startGame,
-              child: const Text("Start Game")
+              onPressed: _players.length >= MIN_PLAYERS ? startGame : null,
+              child: Text(_players.length >= MIN_PLAYERS ? "Start Game" : "Need at least $MIN_PLAYERS players"),
+              style: _players.length < MIN_PLAYERS ? ElevatedButton.styleFrom(
+                primary: Colors.grey,
+              ) : null
             )
           ],
         ),
