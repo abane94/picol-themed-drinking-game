@@ -15,7 +15,7 @@ class ResolvedPrompt {
   ResolvedPrompt(this.prompt, [this.followUp]);
 }
 
-List<String> generateDeck(int rounds, List<String> players) {
+List<String> generateDeck(int rounds, List<String> players, List<PromptConfig> promptsConfigs) {
   shuffle(players);
   shuffle(promptsConfigs);
 

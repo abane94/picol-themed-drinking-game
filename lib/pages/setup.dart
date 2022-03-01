@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:picol_drinking_game/data/prompt_configs.dart';
 import 'package:picol_drinking_game/types/game-parameters.dart';
 
 import 'game.dart';
@@ -31,6 +32,13 @@ class _MyHomePageState extends State<MyHomePage> {
     final TextEditingController _deckSizeController = TextEditingController();
 
     FocusNode playerFocusNode = FocusNode();
+
+    // dropdown data
+    String deckName = PromptMap.options[0];
+    int deckSize = 35;
+
+    Map<int, String> deckOptionsIntToStr = {20: 'Short', 35: 'Normal', 50: 'Long'};
+    Map<String, int> deckOptionsStrToInt = {'Short': 20, 'Normal': 35, 'Long': 50};
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +74,19 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: _deckSizeController,
-              decoration: const InputDecoration(hintText: 'Deck Size'),
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              keyboardType: TextInputType.number,
-            ),
+            const Text('Game Length'),
+            _buildDropDown<int>(deckSize, deckOptionsIntToStr.keys.toList(), (int? newVal) {
+              setState(() {
+                deckSize = newVal!;
+              });
+            }, deckOptionsIntToStr),
+
+            const Text('What kind if Game?'),
+            _buildDropDown<String>(deckName, PromptMap.options, (String? newVal) {
+              setState(() {
+                deckName = newVal!;
+              });
+            }),
             TextField(
               controller: _playerNameController,
               decoration: const InputDecoration(hintText: 'Enter Player Name'),
@@ -143,12 +158,34 @@ class _MyHomePageState extends State<MyHomePage> {
     return _playerWidgets;
   }
 
+  Widget _buildDropDown<T>(T initialValue, List<T> items, void Function(T?) cb, [Map<T, String>? labelMap]) {
+    return DropdownButton(
+
+      // Initial Value
+        value: initialValue,
+
+        // Down Arrow Icon
+        icon: const Icon(Icons.keyboard_arrow_down),
+
+        // Array list of items
+        items: items.map((T item) {
+          return DropdownMenuItem(
+            value: item,
+            child: Text((labelMap ?? const {})[item] ?? item.toString()),
+          );
+        }).toList(),
+        // After selecting the desired option,it will
+        // change button value to selected value
+        onChanged: cb,
+      );
+  }
+
   startGame() {
     _addPlayer(_playerNameController.text);
     Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => GameView(game: GamePrameters(_players, int.tryParse(_deckSizeController.text) ?? 0)),
+            builder: (context) => GameView(game: GamePrameters(_players.where((player) => player.trim().isNotEmpty).toList(), deckSize, deckName)),
           ),
         );
   }

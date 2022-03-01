@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:picol_drinking_game/data/prompt_configs.dart';
 import 'package:picol_drinking_game/logic/generate_deck.dart';
 import 'package:picol_drinking_game/types/game-parameters.dart';
 
 class GameView extends StatefulWidget {
-  const GameView({Key? key, required this.game}) : super(key: key);
+  GameView({Key? key, required this.game}) : super(key: key);
+
+  final String deckName = PromptMap.options[0];
 
   final String title = 'Game View';
 
@@ -32,7 +35,7 @@ class _GameViewState extends State<GameView> {
     // for (String name in widget.game.players) {
     //   prompts.add(name);
     // }
-    prompts = generateDeck(widget.game.rounds, widget.game.players);
+    prompts = generateDeck(widget.game.rounds, widget.game.players, PromptMap.map[widget.game.deckName]!);
     super.initState();
   }
 

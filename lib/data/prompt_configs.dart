@@ -7,7 +7,7 @@ class PromptConfig {
   PromptConfig(this.prompt, [this.duration, this.followUp]);
 }
 
-List<PromptConfig> promptsConfigs = [
+List<PromptConfig> originals = [
   PromptConfig('#player, your not this lazy, are you? High five every player or take a shot' ),
   PromptConfig('#player tickel #player1 or take one shot for each sock they are wearing' ),
   PromptConfig('#player, you are now mute, each word is a drink', 4, '#player, you can talk again' ),
@@ -17,8 +17,10 @@ List<PromptConfig> promptsConfigs = [
   PromptConfig('VOTE: would you rather be a pancake or a waffle? Losers drink 3 times'),
   PromptConfig('VOTE: "yes yes yes yes yes" or "Oh Fuck!"? Winners drink 2 times'),
 
+];
 
-  PromptConfig("VOTE: If there was a fight where there are 4 people against one, would you get involved or call the police? Losers must drink 3 sips"),
+List<PromptConfig> stolen = [
+    PromptConfig("VOTE: If there was a fight where there are 4 people against one, would you get involved or call the police? Losers must drink 3 sips"),
     PromptConfig("#player0, think of something you would do if you were rich. Go around the room and get your friends to guess. The first one to find out gives 2  sips. #player1 starts"),
     PromptConfig("#player0, if you stay quiet for 5 minutes, you can choose someone to finish his/her drink!"),
     PromptConfig("Would you rather die having your head stuck in elevator doors or slipping on a banana peel? Everyone vote at the same time, losing group drinks 2 times"),
@@ -102,3 +104,17 @@ List<PromptConfig> promptsConfigs = [
     PromptConfig("For or against watching a knife thrower screwing up live? Everyone vote at the same time, losing group drink 3 times"),
 
 ];
+
+// List<PromptConfig> promptsConfigs = [
+//   ...originals,
+//   ...stolen
+// ];
+
+class PromptMap {
+  static Map<String, List<PromptConfig>> map = {
+    'original': originals,
+    'stolen': stolen
+  };
+
+  static List<String> options = PromptMap.map.keys.toList();
+}
